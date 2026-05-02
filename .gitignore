@@ -9,6 +9,9 @@ dist
 .env.local
 .env.*.local
 
+# typescript build info
+*.tsbuildinfo
+
 # editor / OS
 .DS_Store
 *.suo
