@@ -55,7 +55,7 @@ function parseGradeResponse(text: string): GradeResult | null {
 
 // Model as specified. The Vite dev-server proxy (vite.config.ts) adds the
 // API key header and forwards /api → https://api.anthropic.com.
-const MODEL = 'claude-sonnet-4-20250514'
+const MODEL = 'claude-haiku-4-5-20251001'
 
 const GRADING_SYSTEM_PROMPT = `You are an expert Pokémon card grader. \
 Examine the front and back of the card carefully across all four standard \
