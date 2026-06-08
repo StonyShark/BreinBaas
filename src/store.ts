@@ -1,6 +1,7 @@
 import { createContext, useContext, useReducer, useEffect, createElement } from 'react';
 import type { ReactNode, Dispatch } from 'react';
 import type { AppState, Employee, Qualification, Meeting, ID } from './types';
+import { SEED_STATE } from './seed';
 
 type Action =
   | { type: 'ADD_EMPLOYEE'; employee: Employee }
@@ -24,7 +25,7 @@ function loadState(): AppState {
   } catch {
     // corrupted data — fall through to empty state
   }
-  return { employees: [], qualifications: [], meetings: [] };
+  return SEED_STATE;
 }
 
 function reducer(state: AppState, action: Action): AppState {
