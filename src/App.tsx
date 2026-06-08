@@ -56,10 +56,7 @@ function Sidebar({ page, onNavigate }: { page: Page; onNavigate: (p: Page) => vo
       {/* Brand */}
       <div style={{ padding: '20px 20px 16px', borderBottom: '1px solid #334155' }}>
         <div style={{ fontSize: 17, fontWeight: 700, color: 'white', letterSpacing: '-0.3px' }}>
-          BreinBaas
-        </div>
-        <div style={{ fontSize: 11, color: '#64748b', marginTop: 3, letterSpacing: '0.3px' }}>
-          Employee Portal
+          MyProthya Portal
         </div>
       </div>
 
