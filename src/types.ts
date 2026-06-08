@@ -1,12 +1,19 @@
 export type ID = string;
 
 export type QualificationCategory =
-  | 'Safety'
-  | 'Technical'
-  | 'Compliance'
-  | 'Leadership'
-  | 'Soft Skills'
-  | 'Other';
+  | 'W048 - B&S Vial Rinse'
+  | 'W047 - B&S Filling A'
+  | 'W047 - B&S Filling B'
+  | 'W046 - B&S Capping'
+  | 'W017 - GT180 Lyophilizer'
+  | 'W017 - GT220 Lyophilizer'
+  | 'W024 - INOVA Vial Rinse'
+  | 'W027 - INOVA Filling A'
+  | 'W027 - INOVA Filling B'
+  | 'W024 - INOVA Capping'
+  | 'W021 - Item Preparation'
+  | 'W021 - W08 Autoclave'
+  | 'W021 - W09 Autoclave';
 
 export type QualificationLevel = 'Beginner' | 'Intermediate' | 'Advanced' | 'Expert';
 

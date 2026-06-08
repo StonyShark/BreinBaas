@@ -310,7 +310,7 @@ function QualificationsTab({
           <table style={{ width: '100%', borderCollapse: 'collapse' }}>
             <thead>
               <tr style={{ background: '#f8fafc', borderBottom: '1px solid #e2e8f0' }}>
-                {['Qualification', 'Category', 'Level', 'Acquired', 'Expires', 'Cert #', ''].map(
+                {['Qualification', 'Qualification Type', 'Level', 'Acquired', 'Expires', 'Cert #', ''].map(
                   (h) => (
                     <th
                       key={h}
@@ -623,7 +623,19 @@ function MeetingCard({
 // ── Qualification Modal ───────────────────────────────────────────────────────
 
 const QUAL_CATEGORIES: QualificationCategory[] = [
-  'Safety', 'Technical', 'Compliance', 'Leadership', 'Soft Skills', 'Other',
+  'W048 - B&S Vial Rinse',
+  'W047 - B&S Filling A',
+  'W047 - B&S Filling B',
+  'W046 - B&S Capping',
+  'W017 - GT180 Lyophilizer',
+  'W017 - GT220 Lyophilizer',
+  'W024 - INOVA Vial Rinse',
+  'W027 - INOVA Filling A',
+  'W027 - INOVA Filling B',
+  'W024 - INOVA Capping',
+  'W021 - Item Preparation',
+  'W021 - W08 Autoclave',
+  'W021 - W09 Autoclave',
 ];
 const QUAL_LEVELS: QualificationLevel[] = ['Beginner', 'Intermediate', 'Advanced', 'Expert'];
 
@@ -631,7 +643,7 @@ type QualForm = Omit<Qualification, 'id' | 'employeeId'>;
 
 const EMPTY_QUAL: QualForm = {
   name: '',
-  category: 'Technical',
+  category: 'W048 - B&S Vial Rinse',
   level: 'Beginner',
   dateAcquired: '',
   expiryDate: null,
@@ -686,7 +698,7 @@ function QualificationModal({
               />
             </FormField>
           </div>
-          <FormField label="Category *">
+          <FormField label="Qualification *">
             <select
               required
               style={selectStyle}
