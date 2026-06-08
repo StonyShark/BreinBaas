@@ -59,7 +59,16 @@ export interface Employee {
   notes: string;
 }
 
+export interface Supervisor {
+  name: string;
+  role: string;
+  department: string;
+  email: string;
+  phone: string;
+}
+
 export interface AppState {
+  supervisor: Supervisor;
   employees: Employee[];
   qualifications: Qualification[];
   meetings: Meeting[];
@@ -68,4 +77,5 @@ export interface AppState {
 export type Page =
   | { name: 'dashboard' }
   | { name: 'employees' }
-  | { name: 'employee-detail'; employeeId: ID };
+  | { name: 'employee-detail'; employeeId: ID }
+  | { name: 'profile' };

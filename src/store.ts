@@ -1,9 +1,10 @@
 import { createContext, useContext, useReducer, useEffect, createElement } from 'react';
 import type { ReactNode, Dispatch } from 'react';
-import type { AppState, Employee, Qualification, Meeting, ID } from './types';
-import { SEED_STATE } from './seed';
+import type { AppState, Employee, Qualification, Meeting, Supervisor, ID } from './types';
+import { SEED_STATE, DEFAULT_SUPERVISOR } from './seed';
 
 type Action =
+  | { type: 'UPDATE_SUPERVISOR'; supervisor: Supervisor }
   | { type: 'ADD_EMPLOYEE'; employee: Employee }
   | { type: 'UPDATE_EMPLOYEE'; employee: Employee }
   | { type: 'DELETE_EMPLOYEE'; id: ID }
@@ -21,15 +22,25 @@ const STORAGE_KEY = 'employee_portal_v2';
 function loadState(): AppState {
   try {
     const raw = localStorage.getItem(STORAGE_KEY);
-    if (raw) return JSON.parse(raw) as AppState;
+    if (raw) {
+      const parsed = JSON.parse(raw) as Partial<AppState>;
+      return {
+        supervisor: parsed.supervisor ?? DEFAULT_SUPERVISOR,
+        employees: parsed.employees ?? [],
+        qualifications: parsed.qualifications ?? [],
+        meetings: parsed.meetings ?? [],
+      };
+    }
   } catch {
-    // corrupted data — fall through to empty state
+    // corrupted data — fall through to seed
   }
   return SEED_STATE;
 }
 
 function reducer(state: AppState, action: Action): AppState {
   switch (action.type) {
+    case 'UPDATE_SUPERVISOR':
+      return { ...state, supervisor: action.supervisor };
     case 'ADD_EMPLOYEE':
       return { ...state, employees: [...state.employees, action.employee] };
     case 'UPDATE_EMPLOYEE':

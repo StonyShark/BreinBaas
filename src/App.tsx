@@ -1,9 +1,11 @@
 import { useState } from 'react';
 import { StoreProvider, useStore } from './store';
 import type { Page } from './types';
+import { Avatar } from './shared';
 import Dashboard from './pages/Dashboard';
 import Employees from './pages/Employees';
 import EmployeeDetail from './pages/EmployeeDetail';
+import Profile from './pages/Profile';
 
 export default function App() {
   const [page, setPage] = useState<Page>({ name: 'dashboard' });
@@ -28,6 +30,7 @@ export default function App() {
           {page.name === 'employee-detail' && (
             <EmployeeDetail employeeId={page.employeeId} onNavigate={setPage} />
           )}
+          {page.name === 'profile' && <Profile onNavigate={setPage} />}
         </main>
       </div>
     </StoreProvider>
@@ -92,12 +95,41 @@ function Sidebar({ page, onNavigate }: { page: Page; onNavigate: (p: Page) => vo
         })}
       </nav>
 
-      {/* Footer */}
-      <div style={{ padding: '12px 20px', borderTop: '1px solid #334155' }}>
-        <div style={{ fontSize: 12, color: '#475569' }}>
-          {state.employees.length}{' '}
-          {state.employees.length === 1 ? 'employee' : 'employees'}
-        </div>
+      {/* Supervisor profile button at bottom */}
+      <div style={{ padding: '12px 12px', borderTop: '1px solid #334155' }}>
+        <button
+          onClick={() => onNavigate({ name: 'profile' })}
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+            gap: 10,
+            width: '100%',
+            padding: '8px',
+            background: page.name === 'profile' ? 'rgba(59,130,246,0.12)' : 'transparent',
+            border: page.name === 'profile' ? '1px solid rgba(59,130,246,0.3)' : '1px solid #334155',
+            borderRadius: 8,
+            cursor: 'pointer',
+            textAlign: 'left',
+            transition: 'background 0.15s',
+          }}
+        >
+          <Avatar name={state.supervisor.name} size={30} />
+          <div style={{ minWidth: 0 }}>
+            <div
+              style={{
+                fontSize: 13,
+                fontWeight: 600,
+                color: page.name === 'profile' ? '#93c5fd' : 'white',
+                whiteSpace: 'nowrap',
+                overflow: 'hidden',
+                textOverflow: 'ellipsis',
+              }}
+            >
+              {state.supervisor.name}
+            </div>
+            <div style={{ fontSize: 11, color: '#64748b' }}>{state.supervisor.role}</div>
+          </div>
+        </button>
       </div>
     </aside>
   );

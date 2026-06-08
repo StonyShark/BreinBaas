@@ -1,4 +1,12 @@
-import type { AppState, Employee } from './types';
+import type { AppState, Employee, Supervisor } from './types';
+
+export const DEFAULT_SUPERVISOR: Supervisor = {
+  name: 'Michael Stouten',
+  role: 'Teamlead',
+  department: 'Operations',
+  email: '',
+  phone: '',
+};
 
 function emp(id: string, name: string, role: string): Employee {
   return {
@@ -14,6 +22,7 @@ function emp(id: string, name: string, role: string): Employee {
 }
 
 export const SEED_STATE: AppState = {
+  supervisor: DEFAULT_SUPERVISOR,
   employees: [
     emp('seed-01', 'Lahcen Ait Ali',           'Senior Operator'),
     emp('seed-02', 'Steve Bhagwandin',          'Process Operator A'),
