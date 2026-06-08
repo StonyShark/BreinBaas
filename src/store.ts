@@ -16,7 +16,7 @@ type Action =
 
 export type StoreDispatch = Dispatch<Action>;
 
-const STORAGE_KEY = 'employee_portal_v1';
+const STORAGE_KEY = 'employee_portal_v2';
 
 function loadState(): AppState {
   try {
