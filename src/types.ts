@@ -67,15 +67,26 @@ export interface Supervisor {
   phone: string;
 }
 
+export interface WikiDoc {
+  id: ID;
+  title: string;
+  url: string;
+  description: string;
+  category: string;
+  createdAt: string;
+}
+
 export interface AppState {
   supervisor: Supervisor;
   employees: Employee[];
   qualifications: Qualification[];
   meetings: Meeting[];
+  wikiDocs: WikiDoc[];
 }
 
 export type Page =
   | { name: 'dashboard' }
   | { name: 'employees' }
   | { name: 'employee-detail'; employeeId: ID }
-  | { name: 'profile' };
+  | { name: 'profile' }
+  | { name: 'wiki' };

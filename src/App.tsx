@@ -6,6 +6,7 @@ import Dashboard from './pages/Dashboard';
 import Employees from './pages/Employees';
 import EmployeeDetail from './pages/EmployeeDetail';
 import Profile from './pages/Profile';
+import Wiki from './pages/Wiki';
 
 export default function App() {
   const [page, setPage] = useState<Page>({ name: 'dashboard' });
@@ -31,15 +32,17 @@ export default function App() {
             <EmployeeDetail employeeId={page.employeeId} onNavigate={setPage} />
           )}
           {page.name === 'profile' && <Profile onNavigate={setPage} />}
+          {page.name === 'wiki' && <Wiki />}
         </main>
       </div>
     </StoreProvider>
   );
 }
 
-const NAV: Array<{ label: string; target: { name: 'dashboard' } | { name: 'employees' }; icon: string }> = [
-  { label: 'Dashboard', target: { name: 'dashboard' }, icon: '⊞' },
-  { label: 'Employees', target: { name: 'employees' }, icon: '◎' },
+const NAV: Array<{ label: string; target: { name: 'dashboard' } | { name: 'employees' } | { name: 'wiki' }; icon: string }> = [
+  { label: 'Dashboard',  target: { name: 'dashboard' },  icon: '⊞' },
+  { label: 'Employees',  target: { name: 'employees' },  icon: '◎' },
+  { label: 'MyWiki',     target: { name: 'wiki' },       icon: '📄' },
 ];
 
 function Sidebar({ page, onNavigate }: { page: Page; onNavigate: (p: Page) => void }) {

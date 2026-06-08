@@ -1,5 +1,6 @@
 import type { AppState, Employee, Supervisor } from './types';
 
+
 export const DEFAULT_SUPERVISOR: Supervisor = {
   name: 'Michael Stouten',
   role: 'Teamlead',
@@ -44,4 +45,5 @@ export const SEED_STATE: AppState = {
   ],
   qualifications: [],
   meetings: [],
+  wikiDocs: [],
 };

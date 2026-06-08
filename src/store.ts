@@ -1,6 +1,6 @@
 import { createContext, useContext, useReducer, useEffect, createElement } from 'react';
 import type { ReactNode, Dispatch } from 'react';
-import type { AppState, Employee, Qualification, Meeting, Supervisor, ID } from './types';
+import type { AppState, Employee, Qualification, Meeting, Supervisor, WikiDoc, ID } from './types';
 import { SEED_STATE, DEFAULT_SUPERVISOR } from './seed';
 
 type Action =
@@ -13,7 +13,10 @@ type Action =
   | { type: 'DELETE_QUALIFICATION'; id: ID }
   | { type: 'ADD_MEETING'; meeting: Meeting }
   | { type: 'UPDATE_MEETING'; meeting: Meeting }
-  | { type: 'DELETE_MEETING'; id: ID };
+  | { type: 'DELETE_MEETING'; id: ID }
+  | { type: 'ADD_WIKI_DOC'; doc: WikiDoc }
+  | { type: 'UPDATE_WIKI_DOC'; doc: WikiDoc }
+  | { type: 'DELETE_WIKI_DOC'; id: ID };
 
 export type StoreDispatch = Dispatch<Action>;
 
@@ -29,6 +32,7 @@ function loadState(): AppState {
         employees: parsed.employees ?? [],
         qualifications: parsed.qualifications ?? [],
         meetings: parsed.meetings ?? [],
+        wikiDocs: parsed.wikiDocs ?? [],
       };
     }
   } catch {
@@ -85,6 +89,15 @@ function reducer(state: AppState, action: Action): AppState {
         ...state,
         meetings: state.meetings.filter((m) => m.id !== action.id),
       };
+    case 'ADD_WIKI_DOC':
+      return { ...state, wikiDocs: [...state.wikiDocs, action.doc] };
+    case 'UPDATE_WIKI_DOC':
+      return {
+        ...state,
+        wikiDocs: state.wikiDocs.map((d) => (d.id === action.doc.id ? action.doc : d)),
+      };
+    case 'DELETE_WIKI_DOC':
+      return { ...state, wikiDocs: state.wikiDocs.filter((d) => d.id !== action.id) };
   }
 }
 
