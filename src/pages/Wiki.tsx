@@ -14,13 +14,20 @@ import {
   formatDate,
 } from '../shared';
 
+const MC_TEMPLATE =
+  'https://prothya.mastercontrol.com/prothya/Main/portal/lists/index.cfm?strSearch=*%s*&list=InfoCards&id=1&dsName=&dsLabel=&page=1&searchType=simple';
+
+function buildMcUrl(title: string): string {
+  return MC_TEMPLATE.replace('%s', encodeURIComponent(title));
+}
+
 type DocForm = Omit<WikiDoc, 'id' | 'createdAt'>;
 
 const EMPTY_FORM: DocForm = {
   title: '',
   url: '',
   description: '',
-  category: '',
+  category: 'SOP',
 };
 
 export default function Wiki() {
@@ -186,31 +193,56 @@ export default function Wiki() {
                   placeholder="e.g. B&S Vial Rinse SOP"
                 />
               </FormField>
-              <FormField label="URL / Link *">
-                <input
+
+              <FormField label="Category *">
+                <select
                   required
-                  style={inputStyle}
-                  value={form.url}
-                  onChange={(e) => set('url', e.target.value)}
-                  placeholder="https://…"
-                  type="url"
-                />
-              </FormField>
-              <FormField label="Category">
-                <input
                   style={inputStyle}
                   value={form.category}
                   onChange={(e) => set('category', e.target.value)}
-                  placeholder="e.g. SOPs, Training, Safety"
-                  list="wiki-categories"
-                />
-                {/* Suggest existing categories */}
-                <datalist id="wiki-categories">
-                  {categories.map((c) => (
-                    <option key={c} value={c} />
-                  ))}
-                </datalist>
+                >
+                  <option value="SOP">SOP</option>
+                  <option value="DOC">DOC</option>
+                  <option value="OJT">OJT</option>
+                </select>
               </FormField>
+
+              <FormField label="URL / Link *">
+                <div style={{ display: 'flex', gap: 8 }}>
+                  <input
+                    required
+                    style={{ ...inputStyle, flex: 1 }}
+                    value={form.url}
+                    onChange={(e) => set('url', e.target.value)}
+                    placeholder="https://…"
+                    type="url"
+                  />
+                  <button
+                    type="button"
+                    title={form.title.trim() ? `Search "${form.title}" in MasterControl` : 'Enter a title first'}
+                    onClick={() => set('url', buildMcUrl(form.title.trim()))}
+                    disabled={!form.title.trim()}
+                    style={{
+                      background: form.title.trim() ? '#0f4c8a' : '#e2e8f0',
+                      color: form.title.trim() ? 'white' : '#94a3b8',
+                      border: 'none',
+                      padding: '8px 12px',
+                      borderRadius: 8,
+                      cursor: form.title.trim() ? 'pointer' : 'not-allowed',
+                      fontSize: 12,
+                      fontWeight: 600,
+                      whiteSpace: 'nowrap',
+                      flexShrink: 0,
+                    }}
+                  >
+                    MasterControl ↗
+                  </button>
+                </div>
+                <div style={{ fontSize: 11, color: '#94a3b8', marginTop: 4 }}>
+                  Or click <strong>MasterControl ↗</strong> to auto-fill a search link from the title above.
+                </div>
+              </FormField>
+
               <FormField label="Description">
                 <textarea
                   style={{ ...textareaStyle, minHeight: 72 }}
@@ -434,15 +466,12 @@ function EmptyState({
 
 // ── Helpers ───────────────────────────────────────────────────────────────────
 
-const ACCENT_PALETTE = [
-  '#3b82f6', '#10b981', '#8b5cf6', '#f59e0b',
-  '#ef4444', '#ec4899', '#0ea5e9', '#14b8a6',
-  '#f97316', '#84cc16',
-];
+const CAT_ACCENT: Record<string, string> = {
+  SOP: '#8b5cf6',
+  DOC: '#10b981',
+  OJT: '#3b82f6',
+};
 
 function categoryAccent(category: string): string {
-  if (!category) return '#94a3b8';
-  let hash = 0;
-  for (let i = 0; i < category.length; i++) hash = category.charCodeAt(i) + ((hash << 5) - hash);
-  return ACCENT_PALETTE[Math.abs(hash) % ACCENT_PALETTE.length];
+  return CAT_ACCENT[category] ?? '#94a3b8';
 }
